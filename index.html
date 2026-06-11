@@ -27,31 +27,57 @@
             scroll-behavior: smooth; 
         }
         
-        body, html { 
-            min-height: 100vh;
-            color: var(--texto-blanco); 
-            font-family: var(--fuente); 
-            line-height: 1.6; 
-            background-color: var(--bg-principal);
-            position: relative;
-        }
+       body, html { 
+    min-height: 100vh;
+    color: var(--texto-blanco); 
+    font-family: var(--fuente); 
+    line-height: 1.6; 
+    background-color: #020617; /* Base oscura */
+    overflow-x: hidden;
+    position: relative;
+}
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(rgba(2, 6, 23, 0.45), rgba(2, 6, 23, 0.45)), url("gato-fondo.png");
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            filter: blur(8px);
-            -webkit-filter: blur(8px);
-            z-index: -1; 
-            transform: scale(1.05); 
-        }
+/* Aurora Azul en la esquina superior izquierda */
+body::before {
+    content: "";
+    position: fixed;
+    top: -20%;
+    left: -20%;
+    width: 70vw;
+    height: 70vh;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(2, 6, 23, 0) 70%);
+    filter: blur(80px);
+    z-index: 0; 
+    pointer-events: none; 
+    animation: flotarAuroraAzul 10s infinite alternate ease-in-out;
+}
+
+/* Aurora Verde en la esquina inferior derecha */
+body::after {
+    content: "";
+    position: fixed;
+    bottom: -20%;
+    right: -20%;
+    width: 70vw;
+    height: 70vh;
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.18) 0%, rgba(2, 6, 23, 0) 70%);
+    filter: blur(80px);
+    z-index: 0; 
+    pointer-events: none;
+    animation: flotarAuroraVerde 12s infinite alternate ease-in-out;
+}
+
+/* Movimientos suaves para el formato de TikTok */
+@keyframes flotarAuroraAzul {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(60px, 40px) scale(1.1); }
+}
+
+@keyframes flotarAuroraVerde {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-50px, -30px) scale(1.15); }
+}
+
 
         .contenido-web {
             position: relative;
@@ -66,17 +92,65 @@
             width: 100%;
         }
 
-        .nav-links-derecho a {
-            color: #94a3b8 !important;
-            text-decoration: none !important;
-            font-weight: 500 !important;
-            font-size: 1rem !important;
-            transition: color 0.2s ease !important;
-        }
-        .nav-links-derecho a:hover, 
-        .nav-links-derecho a.active {
-            color: #38bdf8 !important;
-        }
+        /* ==========================================================================
+   BARRA DE NAVEGACIÓN FLOTANTE ESTILO CRISTAL (INDEX)
+   ========================================================================== */
+nav { 
+    background: rgba(15, 23, 42, 0.6); /* Efecto cristal traslúcido */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: fixed; 
+    top: 15px; /* Despegado del techo para que flote */
+    left: 5%;
+    width: 90%; 
+    z-index: 1000; 
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+nav:hover {
+    border-color: rgba(56, 189, 248, 0.25); /* Destello azul sutil al acercarse */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 15px rgba(56, 189, 248, 0.1);
+}
+
+/* Reutiliza tu contenedor centrado */
+nav .contenedor {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 10px 20px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+/* Enlaces de navegación con brillo verde al pasar el mouse */
+.nav-links-derecho a {
+    color: var(--texto-gris) !important; 
+    text-decoration: none !important; 
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: inline-block;
+}
+
+.nav-links-derecho a:hover,
+.nav-links-derecho a.active { 
+    color: var(--verde-acento) !important; 
+    background: rgba(34, 197, 94, 0.08); /* Fondo brillante suave */
+    transform: translateY(-1px);
+}
+
+/* Ajuste de espacio para que el menú fijo no tape el contenido */
+.contenido-web {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding-top: 90px; /* Le da espacio al menú flotante */
+}
 
         /* ==========================================================================
            2. INTERFAZ PRINCIPAL
@@ -105,31 +179,36 @@
             font-weight: 500;
         }
 
-        .seccion-interactiva {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 30px;
-            margin-top: 20px;
-        }
+        /* ==========================================================================
+   2. CONTENEDORES EFECTO CRISTAL (GLASSMORPHISM) Y CHATBOT NEÓN
+   ========================================================================== */
+.bloque-interactivo {
+    background: rgba(15, 23, 42, 0.55); /* Slate oscuro semitransparente */
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
 
-        .bloque-interactivo {
-            background-color: var(--bg-tarjetas);
-            backdrop-filter: blur(4px); 
-            border: 3px solid #f1f1f1; 
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
-        }
+.bloque-interactivo:hover {
+    border-color: rgba(56, 189, 248, 0.3); /* Destello azul sutil al pasar el mouse */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.1);
+}
 
-        .bloque-interactivo h2 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 15px;
-            color: white;
-            font-weight: bold;
-        }
+.bloque-interactivo h2 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    color: var(--texto-blanco);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
 
         .grupo-campo {
             margin-bottom: 18px;
@@ -144,20 +223,24 @@
         }
 
         .grupo-campo input, .grupo-campo select, .grupo-campo textarea {
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 6px;
-            padding: 12px;
-            color: var(--texto-blanco);
-            font-family: var(--fuente);
-            font-size: 0.95rem;
-        }
+    width: 100%;
+    background-color: rgba(2, 6, 23, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 12px;
+    color: var(--texto-blanco);
+    font-family: var(--fuente);
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
 
-        .grupo-campo input:focus, .grupo-campo select:focus, .grupo-campo textarea:focus {
-            outline: none;
-            border-color: var(--verde-acento);
-        }
+.grupo-campo input:focus, .grupo-campo select:focus, .grupo-campo textarea:focus {
+    outline: none;
+    border-color: var(--verde-acento);
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+    transform: translateY(-2px);
+    background-color: rgba(0, 0, 0, 0.85);
+}
 
         .contenedor-precio {
             background-color: rgba(34, 197, 94, 0.2);
@@ -178,138 +261,327 @@
             gap: 8px;
         }
 
-        .btn-submit {
-            width: 100%;
-            background-color: var(--verde-acento);
-            color: #020617;
-            border: none;
-            padding: 14px;
-            border-radius: 6px;
-            font-size: 1.05rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: transform 0.2s;
-        }
+       /* BOTÓN WHATSAPP DINÁMICO */
+.btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: #020617;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
 
-        .btn-submit:hover {
-            transform: scale(1.02);
-        }
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
+    filter: brightness(1.1);
+}
 
-        /* CHATBOT */
-        .ia-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+/* INTERFAZ DEL CHATBOT INTELIGENTE */
+.ia-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    background: rgba(2, 6, 23, 0.6);
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-        .ia-avatar {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(56, 189, 248, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--azul-tecnico);
-            font-size: 1.2rem;
-        }
+.ia-avatar {
+    width: 42px;
+    height: 42px;
+    background-color: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--azul-tecnico);
+    font-size: 1.25rem;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
 
-        .ia-mensajes {
-            height: 280px;
-            overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 6px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
+.ia-mensajes {
+    height: 280px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(2, 6, 23, 0.4);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+}
 
-        .msg {
-            max-width: 85%;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
+/* burbujas de chat estilo ciberpunk */
+.msg {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
 
-        .msg.ia {
-            background-color: #1e293b;
-            color: var(--texto-blanco);
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-        }
+.msg.ia {
+    background-color: #1e293b;
+    color: var(--texto-blanco);
+    align-self: flex-start;
+    border-bottom-left-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-        .msg.usuario {
-            background-color: var(--azul-tecnico);
-            color: #020617;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-            font-weight: bold;
-        }
+.msg.usuario {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: var(--texto-blanco);
+    align-self: flex-end;
+    border-bottom-right-radius: 3px;
+    font-weight: 500;
+}
+/* ÁREA DE ENTRADA DEL CHAT */
+.ia-input-area {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    align-items: center; /* Forza a que el botón e input midan lo mismo de alto */
+}
 
-        .ia-input-area {
-            display: flex;
-            gap: 10px;
-        }
+.ia-input-area input {
+    flex: 1; /* Ocupa todo el espacio disponible a la izquierda */
+    background-color: rgba(2, 6, 23, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: var(--texto-blanco);
+    font-family: var(--fuente);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
 
-        .ia-input-area input {
-            flex: 1;
-            background-color: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            padding: 12px;
-            color: var(--texto-blanco);
-        }
 
-        .ia-input-area button {
-            background-color: var(--azul-tecnico);
-            color: #020617;
-            border: none;
-            width: 45px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.ia-input-area input:focus {
+    outline: none;
+    border-color: var(--azul-tecnico);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
 
-        footer { 
-            text-align: center; 
-            padding: 20px; 
-            color: #ffffff; 
-            font-size: 0.85rem; 
-            border-top: 1px solid rgba(255,255,255,0.2); 
-            margin-top: 40px; 
-            background-color: rgba(0, 0, 0, 0.85);
-            text-shadow: 0 1px 5px black;
-        }
+.ia-input-area button {
+    background: var(--azul-tecnico);
+    color: #020617;
+    border: none;
+    height: 45px;      /* Alto fijo igual que el input */
+       width: 50px;       /* Ancho cómodo para el dedo o mouse */
+       border-radius: 8px;
+       cursor: pointer;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       font-size: 1.1rem; /* Hace el ícono del avión un poco más grande */
+       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+       flex-shrink: 0;    /* Evita que el botón se haga pequeño si hay mucho texto */
+   
+}
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            nav { padding: 10px 0 !important; }
-            .contenedor-nav { flex-direction: column; gap: 10px; text-align: center; }
-            .logo-img { height: 50px !important; }
-            .seccion-interactiva { grid-template-columns: 1fr; gap: 20px; }
-        }
+.ia-input-area button:hover {
+    background-color: #7dd3fc;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+       /* ANIMACIÓN DE PULSO Y LUZ PARA EL ENCABEZADO DE LA IA */
+.ia-avatar {
+    animation: pulsoAvatarIA 2s infinite alternate ease-in-out;
+}
+
+@keyframes pulsoAvatarIA {
+    0% { 
+        transform: scale(1); 
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.3); 
+    }
+    100% { 
+        transform: scale(1.06); 
+        box-shadow: 0 0 14px 4px rgba(56, 189, 248, 0.15); 
+    }
+}
+
+.ia-header .fa-circle {
+    color: var(--verde-acento) !important;
+    animation: parpadeoVerde 1.5s infinite ease-in-out;
+}
+
+@keyframes parpadeoVerde {
+    0%, 100% { 
+        opacity: 0.3; 
+        filter: drop-shadow(0 0 0px var(--verde-acento));
+    }
+    50% { 
+        opacity: 1; 
+        filter: drop-shadow(0 0 6px var(--verde-acento));
+    }
+}
+
+/* FOOTER*/
+footer { 
+    text-align: center; 
+    padding: 20px; 
+    color: #ffffff; 
+    font-size: 0.85rem; 
+    border-top: 1px solid rgba(255,255,255,0.15); 
+    margin-top: 40px; 
+    background-color: rgba(2, 6, 23, 0.9);
+    text-shadow: 0 1px 5px black;
+}
+/* ==========================================================================
+   ANIMACIÓN INTERACTIVA DE BIENVENIDA: ENSAMBLE PC 
+   ========================================================================== */
+#pantalla-bienvenida {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #020617; /* Fondo oscuro idéntico a tu interfaz */
+    z-index: 9999; /* Se asegura de tapar todo al inicio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s;
+}
+
+.loader-contenedor-pc {
+    text-align: center;
+}
+
+/* El área donde se arma el componente */
+.pc-escena {
+    position: relative;
+    width: 120px;
+    height: 100px;
+    margin: 0 auto 30px auto;
+}
+
+/* Ranura de la placa base */
+.slot-base {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background-color: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+/* Módulo RAM que cae desde arriba */
+.ram-modulo {
+    position: absolute;
+    top: -40px; 
+    left: 10px;
+    width: 100px;
+    height: 55px;
+    background-color: #0f172a;
+    border: 1px solid var(--azul-tecnico);
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    /* Animación elástica de inserción */
+    animation: insertarComponente 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Efecto de barra luminosa RGB */
+.rgb-luces {
+    width: 100%;
+    height: 6px;
+    position: absolute;
+    top: 4px;
+    background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff, #ff00ff, #ff0000);
+    background-size: 300% 100%;
+    animation: flujoRGB 2s linear infinite;
+    opacity: 0; /* Inicia apagada hasta que conecte */
+    animation-delay: 0.8s; /* Prende justo al hacer click en el slot */
+    animation-fill-mode: forwards;
+}
+
+/* BARRA DE ENERGÍA */
+.barra-energia {
+    width: 260px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 auto 15px auto;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.energia-linea {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--azul-tecnico), var(--verde-acento));
+    box-shadow: 0 0 12px var(--verde-acento);
+    animation: cargarEnergia 1.8s ease-in-out forwards;
+}
+
+.texto-carga {
+    color: var(--texto-gris);
+    font-family: var(--fuente);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* LOGICA DE MOVIMIENTOS */
+@keyframes insertarComponente {
+    0% { transform: translateY(0); opacity: 0; }
+    40% { transform: translateY(50px); opacity: 1; } /* Entra al slot */
+    60% { transform: translateY(45px); } /* Rebote */
+    80% { transform: translateY(50px); } /* Conexión firme */
+    100% { transform: translateY(50px); filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.5)); }
+}
+
+@keyframes flujoRGB {
+    0% { background-position: 0% 50%; opacity: 1; }
+    100% { background-position: 100% 50%; opacity: 1; }
+}
+
+@keyframes cargarEnergia {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* Quita la pantalla con suavidad */
+.desvanecer-bienvenida {
+    opacity: 0;
+    visibility: hidden;
+}
     </style>
 </head>
 <body>
+    <div id="pantalla-bienvenida">
+    <div class="loader-contenedor-pc">
+        <div class="pc-escena">
+            <div class="slot-base"></div>
+            <div class="ram-modulo">
+                <div class="rgb-luces"></div>
+            </div>
+        </div>
+        <div class="barra-energia">
+            <div class="energia-linea"></div>
+        </div>
+        <p class="texto-carga">CONECTANDO HARDWARE ST QUIROZ...</p>
+    </div>
+</div> <div class="contenido-web">
 
-    <div class="contenido-web">
-        
         <nav style="background-color: #0b1329; position: sticky; top: 0; z-index: 99999; border-bottom: 1px solid #1e293b; padding: 0; height: 90px; font-family: 'Segoe UI', sans-serif;">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 100%;">
         
@@ -322,7 +594,7 @@
         
         <div style="display: flex; gap: 30px;">
             <a href="index.html" style="color: #94a3b8; text-decoration: none; font-weight: 500; font-size: 1.05rem; transition: color 0.2s;">Inicio</a>
-            <a href="Catalogo.html" style="color: #38bdf8; text-decoration: none; font-weight: 500; font-size: 1.05rem; transition: color 0.2s;">Catálogo de Trabajos</a>
+            <a href="catalogo.html" style="color: #38bdf8; text-decoration: none; font-weight: 500; font-size: 1.05rem; transition: color 0.2s;">Catálogo de Trabajos</a>
         </div>
 
     </div>
@@ -400,6 +672,24 @@
     </div>
 
     <script>
+        
+    window.addEventListener('load', () => {
+        const preloader = document.getElementById('pantalla-bienvenida');
+        
+        // Comprobamos si el usuario ya vio la animación en esta sesión
+        if (!sessionStorage.getItem('animacionVista')) {
+            // Si es su primera vez, dejamos que corra la animación
+            setTimeout(() => {
+                preloader.classList.add('desvanecer-bienvenida');
+                // Guardamos en el navegador que ya la vio
+                sessionStorage.setItem('animacionVista', 'true');
+            }, 2400);
+        } else {
+            // Si ya la vio antes, borramos el preloader de inmediato sin esperar
+            preloader.style.display = 'none';
+        }
+    });
+
         // CONFIGURACIÓN DE TU TELÉFONO DE NEGOCIO (Pon el tuyo aquí con clave de país, ej: 52 para México)
         const TELEFONO_WHATSAPP = "525637113517"; 
 
